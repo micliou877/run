@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>田中馬拉松 · 全馬 22 週訓練計畫</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f6f1e4;
+    --paper-2:#efe7d3;
+    --ink:#22251c;
+    --ink-soft:#4d5142;
+    --paddy:#3f6b3a;       /* rice-paddy green */
+    --paddy-deep:#27451f;
+    --gold:#d8973c;        /* harvest gold */
+    --terra:#c0512f;       /* long-run / heat accent */
+    --line:#d9cfb6;
+    --rec:#e7ecdc;         /* recovery tint */
+    --rec-line:#bcd0a6;
+    --shadow:0 1px 0 rgba(34,37,28,.04), 0 12px 30px -18px rgba(39,69,31,.35);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Noto Sans TC",sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(circle at 12% -5%, rgba(63,107,58,.10), transparent 45%),
+      radial-gradient(circle at 95% 8%, rgba(216,151,60,.12), transparent 40%);
+    background-attachment:fixed;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:clamp(20px,5vw,56px) clamp(16px,4vw,40px) 90px;}
+
+  /* HERO */
+  .hero{position:relative;border:1.5px solid var(--ink);background:var(--paper-2);
+    border-radius:4px;padding:clamp(24px,4vw,44px);overflow:hidden;box-shadow:var(--shadow);}
+  .hero:before{content:"";position:absolute;inset:0;
+    background:repeating-linear-gradient(90deg,transparent 0 38px,rgba(63,107,58,.05) 38px 39px);
+    pointer-events:none;}
+  .kicker{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;letter-spacing:.28em;
+    text-transform:uppercase;font-size:.72rem;color:var(--paddy);margin-bottom:14px;}
+  h1{font-family:"Noto Serif TC",serif;font-weight:900;line-height:1.05;
+    font-size:clamp(2.1rem,6.5vw,3.6rem);letter-spacing:-.01em;}
+  h1 .sub{display:block;font-size:clamp(1rem,3.2vw,1.35rem);font-weight:600;color:var(--ink-soft);
+    font-family:"Noto Sans TC";letter-spacing:.04em;margin-top:10px;}
+  .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;position:relative;}
+  .pill{font-family:"Bricolage Grotesque",sans-serif;font-weight:600;font-size:.82rem;
+    border:1.5px solid var(--ink);border-radius:40px;padding:6px 15px;background:var(--paper);}
+  .pill b{color:var(--terra);}
+  .countdown{position:relative;margin-top:26px;display:flex;align-items:baseline;gap:14px;
+    border-top:1.5px dashed var(--line);padding-top:20px;flex-wrap:wrap;}
+  .cd-num{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;
+    font-size:clamp(2.6rem,9vw,4.4rem);line-height:.9;color:var(--paddy-deep);}
+  .cd-lab{font-size:.95rem;color:var(--ink-soft);font-weight:500;}
+  .cd-lab b{color:var(--ink);font-weight:700;}
+
+  /* SECTION */
+  section{margin-top:clamp(38px,6vw,64px);}
+  .eyebrow{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;letter-spacing:.2em;
+    text-transform:uppercase;font-size:.74rem;color:var(--gold);}
+  h2{font-family:"Noto Serif TC",serif;font-weight:900;font-size:clamp(1.5rem,4.2vw,2.05rem);
+    margin:6px 0 4px;letter-spacing:-.01em;}
+  .lead{color:var(--ink-soft);max-width:62ch;}
+
+  /* ASSESSMENT CARD */
+  .assess{margin-top:22px;border-left:4px solid var(--terra);background:var(--paper-2);
+    padding:20px 22px;border-radius:0 6px 6px 0;box-shadow:var(--shadow);}
+  .assess h3{font-family:"Noto Serif TC";font-size:1.15rem;margin-bottom:6px;}
+  .assess p{color:var(--ink-soft);font-size:.97rem;}
+  .assess p+p{margin-top:10px;}
+  .assess strong{color:var(--ink);}
+
+  /* PHASE LEGEND */
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;}
+  .lg{display:flex;align-items:center;gap:7px;font-size:.82rem;color:var(--ink-soft);
+    border:1px solid var(--line);border-radius:30px;padding:5px 12px;background:var(--paper-2);}
+  .dot{width:11px;height:11px;border-radius:50%;flex:0 0 auto;}
+
+  /* WEEK TABLE */
+  .phase-head{display:flex;align-items:baseline;gap:12px;margin:30px 0 12px;flex-wrap:wrap;}
+  .phase-head .pn{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.05rem;
+    color:var(--paddy-deep);}
+  .phase-head .pr{font-size:.82rem;color:var(--ink-soft);}
+  .phase-bar{height:6px;border-radius:6px;flex:1;min-width:60px;background:var(--paddy);opacity:.25;}
+
+  .week{display:grid;grid-template-columns:74px 1fr;gap:0;border:1px solid var(--line);
+    border-radius:8px;background:var(--paper-2);margin-bottom:10px;overflow:hidden;box-shadow:var(--shadow);}
+  .week .wn{background:var(--paddy);color:#fdfaf0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;padding:14px 6px;text-align:center;}
+  .week .wn .w{font-family:"Bricolage Grotesque";font-weight:800;font-size:1.7rem;line-height:1;}
+  .week .wn .wl{font-size:.62rem;letter-spacing:.12em;opacity:.85;margin-top:3px;}
+  .week .body{padding:13px 16px;}
+  .week .top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;}
+  .week .date{font-family:"Bricolage Grotesque";font-weight:600;font-size:.86rem;color:var(--ink-soft);}
+  .week .stats{display:flex;gap:7px;flex-wrap:wrap;}
+  .stat{font-family:"Bricolage Grotesque";font-weight:600;font-size:.78rem;
+    border:1px solid var(--line);border-radius:20px;padding:2px 10px;background:var(--paper);}
+  .stat.long{border-color:var(--terra);color:var(--terra);background:rgba(192,81,47,.07);font-weight:700;}
+  .week .sess{font-size:.9rem;margin-top:8px;}
+  .week .sess b{color:var(--paddy-deep);}
+  .week .note{font-size:.82rem;color:var(--ink-soft);margin-top:4px;}
+
+  .week.rec .wn{background:var(--rec);color:var(--paddy-deep);}
+  .week.rec{background:var(--rec);border-color:var(--rec-line);}
+  .week.rec .tag{color:var(--paddy);}
+  .week.peak .wn{background:var(--gold);color:#3a2a08;}
+  .week.peak{border-color:var(--gold);box-shadow:0 0 0 1.5px var(--gold),var(--shadow);}
+  .week.taper .wn{background:var(--paddy-deep);}
+  .week.race .wn{background:var(--terra);color:#fff;}
+  .week.race{border-color:var(--terra);box-shadow:0 0 0 1.5px var(--terra),var(--shadow);}
+  .tag{display:inline-block;font-family:"Bricolage Grotesque";font-weight:700;font-size:.68rem;
+    letter-spacing:.1em;text-transform:uppercase;margin-left:2px;}
+
+  /* PRINCIPLE GRID */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:14px;margin-top:22px;}
+  .card{border:1px solid var(--line);border-radius:10px;background:var(--paper-2);
+    padding:20px;box-shadow:var(--shadow);position:relative;}
+  .card .ic{font-family:"Bricolage Grotesque";font-weight:800;font-size:1.4rem;color:var(--gold);
+    width:42px;height:42px;border:1.5px solid var(--ink);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+  .card h3{font-family:"Noto Serif TC";font-size:1.12rem;margin-bottom:7px;}
+  .card p{font-size:.9rem;color:var(--ink-soft);}
+  .card p+p{margin-top:8px;}
+  .card strong{color:var(--ink);}
+
+  /* RACE DAY */
+  .raceday{margin-top:22px;border:1.5px solid var(--ink);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);}
+  .raceday .rh{background:var(--terra);color:#fff;padding:16px 22px;font-family:"Noto Serif TC";
+    font-weight:700;font-size:1.2rem;}
+  .raceday ol{list-style:none;counter-reset:r;padding:8px 0;}
+  .raceday li{counter-increment:r;padding:12px 22px 12px 58px;position:relative;
+    border-bottom:1px dashed var(--line);font-size:.93rem;}
+  .raceday li:last-child{border-bottom:none;}
+  .raceday li:before{content:counter(r);position:absolute;left:18px;top:11px;
+    font-family:"Bricolage Grotesque";font-weight:800;color:#fff;background:var(--paddy);
+    width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;}
+  .raceday b{color:var(--terra);}
+
+  .note-box{margin-top:18px;background:rgba(216,151,60,.12);border:1px dashed var(--gold);
+    border-radius:8px;padding:16px 18px;font-size:.88rem;color:var(--ink-soft);}
+  .note-box b{color:var(--ink);}
+
+  footer{margin-top:60px;border-top:1.5px solid var(--line);padding-top:18px;
+    font-size:.78rem;color:var(--ink-soft);text-align:center;line-height:1.8;}
+
+  @media (max-width:520px){
+    .week{grid-template-columns:60px 1fr;}
+    .week .wn .w{font-size:1.4rem;}
+  }
+  @media print{
+    body{background:#fff;}
+    .hero,.card,.week,.assess,.raceday{box-shadow:none;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="kicker">2026 台灣米倉 · 全程馬拉松 42.195K</div>
+    <h1>田中馬<span class="sub">22 週完賽訓練計畫 · 從重新開機到站上終點</span></h1>
+    <div class="meta">
+      <span class="pill">比賽日 <b>11/8（日）</b></span>
+      <span class="pill">彰化 · 景崧文化教育園區</span>
+      <span class="pill">目標 <b>順利完賽</b></span>
+      <span class="pill">起點 週跑量 <b>~10K</b></span>
+    </div>
+    <div class="countdown">
+      <span class="cd-num" id="days">—</span>
+      <span class="cd-lab"><b>天</b>後鳴槍<br>從今天（6/初）到賽前，剛好 <b>22 個完整訓練週</b></span>
+    </div>
+  </header>
+
+  <!-- ASSESSMENT -->
+  <section>
+    <div class="eyebrow">先看清楚你的起點</div>
+    <h2>現況判斷</h2>
+    <div class="assess">
+      <h3>你的條件其實不差，但有兩個重點</h3>
+      <p><strong>① 你有底子、只是荒廢了。</strong>之前固定一週約 10K，身體有跑步記憶，重新啟動會比完全新手快，受傷風險也較低。但停了兩三個月，心肺與肌腱韌帶都退掉了，<strong>前 3 週千萬別逞強</strong>——這段不是練體能，是「安全地把身體叫醒」。</p>
+      <p><strong>② 從 10K/週 到全馬，跨度不小，但 22 週很夠。</strong>完賽全馬最關鍵的不是速度，是<strong>「週跑量」與「最長一次的長跑距離」</strong>。我們會把長跑從 5K 一路疊到 32K、週量推到約 50–55K，全程以「能聊天的輕鬆配速」為主。只要不受傷、能持續，完賽是很實際的目標。</p>
+      <p style="font-size:.86rem;margin-top:12px;">下面的里程數是<strong>目標值，不是聖旨</strong>。任何一次覺得腳怪怪的、特別累，就減量或多休一天——少跑一場沒關係，連續好幾週的累積才是真正讓你完賽的東西。</p>
+    </div>
+  </section>
+
+  <!-- LEGEND + WEEKS -->
+  <section>
+    <div class="eyebrow">照表操課</div>
+    <h2>22 週完整課表</h2>
+    <p class="lead">每週固定 1 次長跑（週末）＋ 2–3 次平日跑。標示「長」的就是當週的重點長跑，請務必慢、務必完成。</p>
+    <div class="legend">
+      <span class="lg"><span class="dot" style="background:var(--paddy)"></span>一般週</span>
+      <span class="lg"><span class="dot" style="background:var(--rec-line)"></span>減量週（修復吸收）</span>
+      <span class="lg"><span class="dot" style="background:var(--gold)"></span>巔峰 · 最長跑</span>
+      <span class="lg"><span class="dot" style="background:var(--paddy-deep)"></span>賽前減量</span>
+      <span class="lg"><span class="dot" style="background:var(--terra)"></span>比賽週</span>
+    </div>
+
+    <!-- PHASE A -->
+    <div class="phase-head"><span class="pn">階段一 · 重新開機</span><span class="pr">W1–W3｜6月</span><span class="phase-bar"></span></div>
+
+    <div class="week"><div class="wn"><div class="w">1</div><div class="wl">WEEK</div></div>
+      <div class="body"><div class="top"><span class="date">6/8 – 6/14</span>
+      <span class="stats"><span class="stat">週量 ~12K</span><span class="stat long">長跑 5K</span></span></div>
+      <div class="sess"><b>3 跑：</b>輕鬆 3K ＋ 輕鬆 4K ＋ 長跑 5K</div>
+      <div class="note">全程能聊天的配速，覺得喘就走一走。重點是讓身體想起怎麼跑。</div></div></div>
+
+    <div class="week"><div class="wn"><div class="w">2</div><div class="wl">WEEK</div></div>
+      <div class="body"><div class="top"><span class="date">6/15 – 6/21</span>
+      <span class="stats"><span class="stat">週量 ~16K</span><span class="stat long">長跑 7K</span></span></div>
+      <div class="sess"><b>3 跑：</b>4K ＋ 5K ＋ 長跑 7K</div>
+      <div class="note">找回跑感。留意有沒有不正常的痠痛（尤其膝、阿基里斯腱）。</div></div></div>
+
+    <div class="week"><div class="wn"><div class="w">3</div><div class="wl">WEEK</div></div>
+      <div class="body"><div class="top"><span class="date">6/22 – 6/28</span>
+      <span class="stats"><span class="stat">週量 ~20K</span><span class="stat long">長跑 9K</span></span></div>
+      <div class="sess"><b>3 跑：</b>5K ＋ 6K ＋ 長跑 9K</div>
+      <div class="note">把「一週三跑」變成固定習慣，這是接下來一切的地基。</div></div></div>
+
+    <!-- PHASE B -->
+    <div class="phase-head"><span class="pn">階段二 · 打底期</span><span class="pr">W4–W7｜7月</span><span class="phase-bar"></span></div>
+
+    <div class="week"><div class="wn"><div class="w">4</div><div class="wl">WEEK</div></div>
+      <div class="body"><div class="top"><span class="date">6/29 – 7/5</span>
+      <span class="stats"><span class="stat">週量 ~24K</span><span class="stat long">長跑 11K</span></span></div>
+      <div class="sess"><b>4 跑：</b>5K ＋ 6K ＋ 5K ＋ 長跑 11K</div>
+      <div class="note">升到一週四跑，量緩緩往上加。</div></div></div>
+
+    <div class="week"><div class="wn"><div class="w">5</div><div class="wl">WEEK</div></div>
+      <div class="body"><div class="top"><span class="date">7/6 – 7/12</span>
+      <span class="stats"><span class="stat">週量 ~28K</span><span class="stat long">長跑 13K</span></span></div>
+      <div class="sess"><b>4 跑：</b>6K ＋ 7K ＋ 5K ＋ 長跑 13K</div>
+      <div class="note">盛夏來了——長跑挪到清晨或日落後，配速放慢、看心率不看數字。</div></div></div>
+
+    <div class="week"><div class="wn"><div class="w">6</div><div class="wl">WEEK</div></div>
+      <div class="body"><div class="top"><span class="date">7/13 – 7/19</span>
+      <span class="stats"><span class="stat">週量 ~32K</span><span class="stat long">長跑 16K</span></span></div>
+      <div class="sess"><b>4 跑：</b>6K ＋ 8K ＋ 6K ＋ 長跑 16K</div>
+      <div class="note">首次破 15K。跑後 30 分鐘內補水＋碳水＋蛋白質。</div></div></div>
+
+    <div class="week rec"><div class="wn"><div class="w">7</div><div class="wl">WEEK</div></div>
+      <div class="body"><div class="top"><span class="date">7/20 – 7/26 <span class="tag">減量</span></span>
+      <span class="stats"><span class="stat">週量 ~22K</span><span class="stat long">長跑 11K</span></span></div>
+      <div class="sess"><b>4 跑：</b>5K ＋ 6K ＋ 4K ＋ 長跑 11K</div>
+      <div class="note">減量週：身體在這週把前幾週的訓練「吃進去」並修復，別偷加量。</div></div></div>
+
+    <!-- PHASE C -->
+    <div class="phase-head"><span class="pn">階段三 · 進階耐力</span><span class="pr">W8–W11｜8月</span><span class="phase-bar"></span></div>
+
+    <div class="week"><div class="wn"><div class="w">8</div><div class="wl">WEEK</div></div>
+      <div class="body"><div class="top"><span class="date">7/27 – 8/2</span>
+      <span class="stats"><span class="stat">週量 ~33K</span><span class="stat long">長跑 16K</span></span></div>
+      <div class="sess"><b>4 跑：</b>6K ＋ 8K ＋ 6K ＋ 長跑 16K</div>
+      <div class="note">回到節奏，量重新往上。</div></div></div>
+
+    <div class="week"><div class="wn"><div class="w">9</div><div class="wl">WEEK</div></div>
+      <div class="body"><div class="top"><span class="date">8/3 – 8/9</span>
+      <span class="stats"><span class="stat">週量 ~38K</span><span class="stat long">長跑 19K</span></span></div>
+      <div class="sess"><b>4 跑：</b>7K ＋ 9K ＋ 6K ＋ 長跑 19K</div>
+      <div class="note">長跑接近 20K，<strong>開始練習途中補給</strong>（能量膠／電解質），讓腸胃習慣。</div></div></div>
+
+    <div class="week"><div class="wn"><div class="w">10</div><div class="wl">WEEK</div></div>
+      <div class="body"><div class="top"><span class="date">8/10 – 8/16</span>
+      <span class="stats"><span class="stat">週量 ~42K</span><span class="stat long">長跑 21K</span></span></div>
+      <div class="sess"><b>4 跑：</b>8K ＋ 9K ＋ 7K ＋ 長跑 21K</div>
+      <div class="note">突破 20K！等於半馬距離，是一個大里程碑。</div></div></div>
+
+    <div class="week rec"><div class="wn"><div class="w">11</div><div class="wl">WEEK</div></div>
+      <div class="body"><div class="top"><span class="date">8/17 – 8/23 <span class="tag">減量</span></span>
+      <span class="stats"><span class="stat">週量 ~30K</span><span class="stat long">長跑 15K</span></span></div>
+      <div class="sess"><b>4 跑：</b>6K ＋ 7K ＋ 5K ＋ 長跑 15K</div>
+      <div class="note">減量週。</div></div></div>
+
+    <!-- PHASE D -->
+    <div class="phase-head"><span class="pn">階段四 · 馬拉松專項</span><span class="pr">W12–W15｜9月</span><span class="phase-bar"></span></div>
+
+    <div class="week"><div class="wn"><div class="w">12</div><div class="wl">WEEK</div></div>
+      <div class="body"><div class="top"><span class="date">8/24 – 8/30</span>
+      <span class="stats"><span class="stat">週量 ~44K</span><span class="stat long">長跑 23K</span></span></div>
+      <div class="sess"><b>4 跑：</b>8K ＋ 10K ＋ 6K ＋ 長跑 23K</div>
+      <div class="note">進入專項期，長跑的後段試著維持穩定節奏。</div></div></div>
+
+    <div class="week"><div class="wn"><div class="w">13</div><div class="wl">WEEK</div></div>
+      <div class="body"><div class="top"><span class="date">8/31 – 9/6</span>
+      <span class="stats"><span class="stat">週量 ~48K</span><span class="stat long">長跑 25K</span></span></div>
+      <div class="sess"><b>4 跑：</b>9K ＋ 10K ＋ 7K ＋ 長跑 25K</div>
+      <div class="note">長跑可在中後段插入幾段「目標完賽配速」，感受比賽節奏。</div></div></div>
+
+    <div class="week"><div class="wn"><div class="w">14</div><div class="wl">WEEK</div></div>
+      <div class="body"><div class="top"><span class="date">9/7 – 9/13</span>
+      <span class="stats"><span class="stat">週量 ~50K</span><span class="stat long">長跑 27K</span></span></div>
+      <div class="sess"><b>4 跑：</b>9K ＋ 11K ＋ 7K ＋ 長跑 27K</div>
+      <div class="note">週量與長跑同步推到高檔，這幾週最辛苦也最關鍵。</div></div></div>
+
+    <div class="week rec"><div class="wn"><div class="w">15</div><div class="wl">WEEK</div></div>
+      <div class="body"><div class="top"><span class="date">9/14 – 9/20 <span class="tag">減量</span></span>
+      <span class="stats"><span class="stat">週量 ~36K</span><span class="stat long">長跑 19K</span></span></div>
+      <div class="sess"><b>4 跑：</b>7K ＋ 8K ＋ 6K ＋ 長跑 19K</div>
+      <div class="note">減量週，為最後的巔峰期蓄力。</div></div></div>
+
+    <!-- PHASE E -->
+    <div class="phase-head"><span class="pn">階段五 · 巔峰期</span><span class="pr">W16–W19｜9月底–10月中</span><span class="phase-bar"></span></div>
+
+    <div class="week"><div class="wn"><div class="w">16</div><div class="wl">WEEK</div></div>
+      <div class="body"><div class="top"><span class="date">9/21 – 9/27</span>
+      <span class="stats"><span class="stat">週量 ~50K</span><span class="stat long">長跑 28K</span></span></div>
+      <div class="sess"><b>4 跑：</b>9K ＋ 11K ＋ 7K ＋ 長跑 28K</div>
+      <div class="note"><strong>從這週起，長跑全套演練比賽裝備與補給</strong>（鞋、襪、衣、能量膠、防磨）。</div></div></div>
+
+    <div class="week"><div class="wn"><div class="w">17</div><div class="wl">WEEK</div></div>
+      <div class="body"><div class="top"><span class="date">9/28 – 10/4</span>
+      <span class="stats"><span class="stat">週量 ~54K</span><span class="stat long">長跑 30K</span></span></div>
+      <div class="sess"><b>4 跑：</b>10K ＋ 12K ＋ 8K ＋ 長跑 30K</div>
+      <div class="note">首次 30K！完全模擬比賽日：同樣時間起跑、同樣早餐、同樣補給節奏。</div></div></div>
+
+    <div class="week"><div class="wn"><div class="w">18</div><div class="wl">WEEK</div></div>
+      <div class="body"><div class="top"><span class="date">10/5 – 10/11</span>
+      <span class="stats"><span class="stat">週量 ~46K</span><span class="stat long">長跑 24K</span></span></div>
+      <div class="sess"><b>4 跑：</b>9K ＋ 10K ＋ 7K ＋ 長跑 24K</div>
+      <div class="note">小幅減量，讓腿有電，迎接下週最後一次超長跑。</div></div></div>
+
+    <div class="week peak"><div class="wn"><div class="w">19</div><div class="wl">WEEK</div></div>
+      <div class="body"><div class="top"><span class="date">10/12 – 10/18 <span class="tag" style="color:var(--gold)">巔峰</span></span>
+      <span class="stats"><span class="stat">週量 ~55K</span><span class="stat long">長跑 32K</span></span></div>
+      <div class="sess"><b>4 跑：</b>10K ＋ 12K ＋ 8K ＋ 長跑 <strong>32K</strong></div>
+      <div class="note">全程最長的一次！跑完這趟，你的身心都會知道「我做得到」。之後只減不加。</div></div></div>
+
+    <!-- PHASE F -->
+    <div class="phase-head"><span class="pn">階段六 · 減量備賽</span><span class="pr">W20–W22｜10月底–11/8</span><span class="phase-bar"></span></div>
+
+    <div class="week taper"><div class="wn"><div class="w">20</div><div class="wl">WEEK</div></div>
+      <div class="body"><div class="top"><span class="date">10/19 – 10/25 <span class="tag" style="color:var(--paddy-deep)">減量</span></span>
+      <span class="stats"><span class="stat">週量 ~42K</span><span class="stat long">長跑 22K</span></span></div>
+      <div class="sess"><b>4 跑：</b>8K ＋ 10K ＋ 6K ＋ 長跑 22K</div>
+      <div class="note">正式減量：<strong>砍里程、保留一點點強度</strong>，腿開始「養」起來。</div></div></div>
+
+    <div class="week taper"><div class="wn"><div class="w">21</div><div class="wl">WEEK</div></div>
+      <div class="body"><div class="top"><span class="date">10/26 – 11/1 <span class="tag" style="color:var(--paddy-deep)">減量</span></span>
+      <span class="stats"><span class="stat">週量 ~30K</span><span class="stat long">長跑 14K</span></span></div>
+      <div class="sess"><b>3–4 跑：</b>6K ＋ 6K ＋ 長跑 14K ＋（輕鬆 4K）</div>
+      <div class="note">會覺得腿癢想多跑——忍住。這週的休息會在比賽日變成你的腿力。</div></div></div>
+
+    <div class="week race"><div class="wn"><div class="w">22</div><div class="wl">RACE</div></div>
+      <div class="body"><div class="top"><span class="date">11/2 – 11/8 <span class="tag" style="color:var(--terra)">比賽週</span></span>
+      <span class="stats"><span class="stat long" style="font-size:.85rem;">11/8 全馬 42.195K</span></span></div>
+      <div class="sess"><b>週中：</b>輕鬆 4K ×2 ＋ 幾組快步（strides）；其餘休息。</div>
+      <div class="note">睡飽、賽前 2–3 天開始多補碳水、不嘗試任何新食物或新裝備。<strong>站上起點線那一刻，訓練已經完成了。</strong></div></div></div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section>
+    <div class="eyebrow">課表之外，決定成敗的事</div>
+    <h2>七個關鍵原則</h2>
+    <div class="grid">
+      <div class="card"><div class="ic">慢</div><h3>九成都要「輕鬆跑」</h3>
+        <p>除了少數加速段，<strong>幾乎所有訓練都該是能邊跑邊聊天的配速</strong>。受傷與過勞，幾乎都來自「平常跑太快」。寧可慢，不要傷。</p></div>
+
+      <div class="card"><div class="ic">長</div><h3>長跑是核心，可走跑交替</h3>
+        <p>長跑練的是「耐久」不是速度。<strong>跑 8 分鐘走 1 分鐘</strong>的走跑策略完全合理，對完賽型跑者反而更穩，田中歡樂的氣氛也很適合。</p></div>
+
+      <div class="card"><div class="ic">熱</div><h3>對付台灣夏天</h3>
+        <p>6–9 月最大敵人是<strong>高溫高濕</strong>。練跑挪到清晨或日落後、隨身補水、配速比平常再放慢——熱天看「費力程度」不看手錶。撐過夏訓，秋天的涼爽會讓你變強。</p></div>
+
+      <div class="card"><div class="ic">肌</div><h3>每週 2 次肌力</h3>
+        <p>低里程跑全馬，<strong>肌力訓練是防傷保險</strong>。深蹲、弓箭步、單腳、核心、小腿——各 15–20 分鐘，大幅降低膝蓋與阿基里斯腱問題。</p></div>
+
+      <div class="card"><div class="ic">鞋</div><h3>裝備現在就備好</h3>
+        <p><strong>現在就去專業店挑一雙合腳的跑鞋並開始穿開</strong>。比賽日絕不穿新鞋、新襪、新衣。長跑就是裝備總彩排，連防磨（凡士林／貼布）都要先試。</p></div>
+
+      <div class="card"><div class="ic">糧</div><h3>補給要練、要有計畫</h3>
+        <p>全馬約每小時需 <strong>30–60 克碳水</strong>。從 W9 起在長跑中練習吃膠＋電解質，讓腸胃適應。田中補給站雖有名，但<strong>跑全馬不能只靠路邊小吃</strong>，要有自己的節奏。</p></div>
+
+      <div class="card"><div class="ic">坡</div><h3>練一點上坡</h3>
+        <p>田中路線不是全平、後段有起伏。訓練裡安排一些緩坡或在跑步機加坡度，<strong>讓腿習慣爬升</strong>，比賽後段才不會被坡擊垮。</p></div>
+    </div>
+  </section>
+
+  <!-- RACE DAY -->
+  <section>
+    <div class="eyebrow">11/8 那一天</div>
+    <h2>比賽日配速與策略</h2>
+    <div class="raceday">
+      <div class="rh">第一次全馬，前半程的紀律決定後半程的笑容</div>
+      <ol>
+        <li><b>起跑刻意放慢。</b>前 5–10K 要慢到「覺得太簡單」的程度。第一場全馬，九成的人都是前面衝太快、35K 後撞牆。</li>
+        <li><b>目標是「後半比前半快或一樣」</b>（負分段）。把興奮留到後段釋放。</li>
+        <li><b>走跑交替 ＋ 走補給站。</b>每個水站走著喝，順便喘口氣，反而比硬跑更快到終點。</li>
+        <li><b>補給按表吃，別等到餓/渴。</b>照訓練時的節奏定時補碳水與電解質，渴了才喝就太晚了。</li>
+        <li><b>田中小吃淺嚐就好。</b>米糕、肉圓很誘人，但前半程別吃太飽壓壞腸胃——留到後段當獎勵。</li>
+        <li><b>後段靠鄉親的加油聲撐住。</b>這正是田中馬最迷人的地方，把笑容掛上，享受最後幾公里。</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ADMIN -->
+  <section>
+    <div class="eyebrow">別忘了的行政事項</div>
+    <h2>報名與賽事細節</h2>
+    <div class="note-box">
+      <p><b>· 盡早報名：</b>田中馬非常熱門、常額滿甚至需抽籤，報名一開放（通常夏季前後）就要留意官方公告卡位。</p>
+      <p style="margin-top:8px;"><b>· 確認關門時間：</b>全馬通常有約 6 小時的關門限制（含分段關門點）。報名簡章出來後，務必確認<b>各檢查點關門時間</b>，回推你需要的平均配速與走跑比例。</p>
+      <p style="margin-top:8px;"><b>· 健康評估：</b>大會保險多為意外險，不含個人疾病。若曾有胸悶、心悸、頭暈等狀況，開練前先做個健康檢查／諮詢醫師。</p>
+      <p style="margin-top:8px;"><b>· 退費期限要看清：</b>報名後若需退費，多半有時間與比例限制（越早退、退越多），決定前先看簡章。</p>
+    </div>
+  </section>
+
+  <footer>
+    田中馬 · 全馬 22 週訓練計畫｜目標：順利完賽、笑著進終點<br>
+    里程為建議目標值，請依身體狀況彈性調整；有持續疼痛請就醫，別硬撐。
+  </footer>
+
+</div>
+
+<script>
+  (function(){
+    var race = new Date(2026,10,8); // 2026-11-08 (month is 0-indexed)
+    var today = new Date();
+    today.setHours(0,0,0,0);
+    var diff = Math.round((race - today)/86400000);
+    var el = document.getElementById('days');
+    if(el){ el.textContent = diff > 0 ? diff : 0; }
+  })();
+</script>
+</body>
+</html>

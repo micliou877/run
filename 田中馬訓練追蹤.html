@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>田中馬 · 22週訓練追蹤</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f6f1e4;--paper-2:#efe7d3;--ink:#22251c;--ink-soft:#4d5142;
+  --paddy:#3f6b3a;--paddy-deep:#27451f;--gold:#d8973c;--terra:#c0512f;
+  --line:#d9cfb6;--rec:#e7ecdc;--rec-line:#bcd0a6;
+  --shadow:0 1px 0 rgba(34,37,28,.04),0 12px 30px -18px rgba(39,69,31,.35);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Noto Sans TC",sans-serif;background:var(--paper);color:var(--ink);line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(circle at 12% -5%,rgba(63,107,58,.10),transparent 45%),
+    radial-gradient(circle at 95% 8%,rgba(216,151,60,.12),transparent 40%);
+  background-attachment:fixed;}
+.wrap{max-width:980px;margin:0 auto;padding:clamp(20px,5vw,56px) clamp(16px,4vw,40px) 90px;}
+
+/* STICKY BAR */
+.sbar{position:sticky;top:0;z-index:100;background:rgba(246,241,228,.96);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);padding:9px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.sbar-title{font-family:"Bricolage Grotesque";font-weight:800;font-size:.88rem;color:var(--paddy-deep);white-space:nowrap;}
+.sbar-prog-wrap{flex:1;min-width:80px;height:6px;background:var(--line);border-radius:6px;overflow:hidden;}
+.sbar-prog-fill{height:100%;background:var(--paddy);border-radius:6px;transition:width .4s;}
+.sbar-text{font-size:.8rem;color:var(--ink-soft);white-space:nowrap;}
+.sbar-cd{font-family:"Bricolage Grotesque";font-weight:700;font-size:.88rem;color:var(--terra);white-space:nowrap;}
+
+/* HERO */
+.hero{position:relative;border:1.5px solid var(--ink);background:var(--paper-2);border-radius:4px;
+  padding:clamp(24px,4vw,44px);overflow:hidden;box-shadow:var(--shadow);}
+.hero:before{content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(90deg,transparent 0 38px,rgba(63,107,58,.05) 38px 39px);pointer-events:none;}
+.kicker{font-family:"Bricolage Grotesque";font-weight:700;letter-spacing:.28em;text-transform:uppercase;
+  font-size:.72rem;color:var(--paddy);margin-bottom:14px;}
+h1{font-family:"Noto Serif TC";font-weight:900;line-height:1.05;font-size:clamp(2.1rem,6.5vw,3.6rem);letter-spacing:-.01em;}
+h1 .sub{display:block;font-size:clamp(1rem,3.2vw,1.35rem);font-weight:600;color:var(--ink-soft);
+  font-family:"Noto Sans TC";letter-spacing:.04em;margin-top:10px;}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-top:28px;}
+.sc{background:var(--paper-2);border:1px solid var(--line);border-radius:10px;padding:16px 18px;box-shadow:var(--shadow);}
+.sc .val{font-family:"Bricolage Grotesque";font-weight:800;font-size:2rem;color:var(--paddy-deep);line-height:1;}
+.sc .lab{font-size:.8rem;color:var(--ink-soft);margin-top:4px;}
+.sc.accent .val{color:var(--terra);}
+.sc.hi .val{color:var(--gold);}
+
+/* SECTION */
+section{margin-top:clamp(38px,6vw,64px);}
+.eyebrow{font-family:"Bricolage Grotesque";font-weight:700;letter-spacing:.2em;text-transform:uppercase;font-size:.74rem;color:var(--gold);}
+h2{font-family:"Noto Serif TC";font-weight:900;font-size:clamp(1.5rem,4.2vw,2.05rem);margin:6px 0 4px;letter-spacing:-.01em;}
+
+/* PHASE HEAD */
+.phase-head{display:flex;align-items:baseline;gap:12px;margin:30px 0 10px;flex-wrap:wrap;}
+.phase-head .pn{font-family:"Bricolage Grotesque";font-weight:800;font-size:1.05rem;color:var(--paddy-deep);}
+.phase-head .pr{font-size:.82rem;color:var(--ink-soft);}
+.phase-bar{height:5px;border-radius:5px;flex:1;min-width:60px;background:var(--paddy);opacity:.2;}
+
+/* WEEK CARD */
+.wcard{border:1px solid var(--line);border-radius:10px;background:var(--paper-2);
+  margin-bottom:10px;overflow:hidden;box-shadow:var(--shadow);transition:box-shadow .2s;}
+.wcard:hover{box-shadow:0 2px 0 rgba(34,37,28,.06),0 18px 36px -16px rgba(39,69,31,.4);}
+.wcard.current{border:2px solid var(--paddy);box-shadow:0 0 0 3px rgba(63,107,58,.12),var(--shadow);}
+.wcard.rec{background:var(--rec);border-color:var(--rec-line);}
+.wcard.peak{border-color:var(--gold);box-shadow:0 0 0 1.5px var(--gold),var(--shadow);}
+.wcard.race{border-color:var(--terra);box-shadow:0 0 0 1.5px var(--terra),var(--shadow);}
+.wcard.done-all{opacity:.82;}
+
+.wlayout{display:grid;grid-template-columns:74px 1fr;}
+.wnb{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:14px 6px;text-align:center;background:var(--paddy);color:#fdfaf0;position:relative;}
+.wcard.rec .wnb{background:var(--rec-line);color:var(--paddy-deep);}
+.wcard.peak .wnb{background:var(--gold);color:#3a2a08;}
+.wcard.taper .wnb{background:var(--paddy-deep);}
+.wcard.race .wnb{background:var(--terra);}
+.wn-num{font-family:"Bricolage Grotesque";font-weight:800;font-size:1.7rem;line-height:1;}
+.wn-lbl{font-size:.58rem;letter-spacing:.12em;opacity:.8;margin-top:3px;text-transform:uppercase;}
+.wn-chk{position:absolute;top:6px;right:5px;width:16px;height:16px;background:#fff;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:.6rem;color:var(--paddy);
+  opacity:0;transition:opacity .2s;}
+.wcard.done-all .wn-chk{opacity:1;}
+
+.wbody{padding:13px 16px;}
+.curr-tag{display:inline-block;font-family:"Bricolage Grotesque";font-weight:700;font-size:.68rem;
+  letter-spacing:.08em;text-transform:uppercase;background:var(--paddy);color:#fdfaf0;
+  border-radius:3px;padding:1px 7px;margin-bottom:7px;}
+.wtop{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
+.wdate{font-family:"Bricolage Grotesque";font-weight:600;font-size:.85rem;color:var(--ink-soft);}
+.wbadges{display:flex;gap:5px;flex-wrap:wrap;align-items:center;}
+.badge{font-family:"Bricolage Grotesque";font-weight:600;font-size:.75rem;border:1px solid var(--line);
+  border-radius:20px;padding:2px 9px;background:var(--paper);}
+.badge.long{border-color:var(--terra);color:var(--terra);background:rgba(192,81,47,.07);}
+.badge.typ{font-size:.68rem;background:var(--paddy-deep);color:#fdfaf0;border-color:var(--paddy-deep);}
+.badge.typ.rec{background:var(--rec-line);color:var(--paddy-deep);border-color:var(--rec-line);}
+.badge.typ.peak{background:var(--gold);color:#3a2a08;border-color:var(--gold);}
+.badge.typ.race{background:var(--terra);color:#fff;border-color:var(--terra);}
+
+/* PROGRESS */
+.wprog{margin-bottom:10px;}
+.wprog-labels{display:flex;justify-content:space-between;font-size:.77rem;color:var(--ink-soft);margin-bottom:4px;}
+.wprog-actual{color:var(--paddy-deep);font-weight:700;}
+.wprog-track{height:7px;background:var(--line);border-radius:7px;overflow:hidden;}
+.wprog-fill{height:100%;background:var(--paddy);border-radius:7px;transition:width .3s;}
+.wprog-fill.over{background:var(--gold);}
+.wprog-fill.low{background:rgba(192,81,47,.55);}
+
+/* SESSIONS */
+.sess-list{display:flex;flex-direction:column;gap:5px;}
+.srow{display:flex;align-items:center;gap:9px;padding:7px 9px;background:rgba(255,255,255,.45);
+  border-radius:6px;border:1px solid transparent;transition:all .18s;}
+.srow.done{background:rgba(63,107,58,.09);border-color:rgba(63,107,58,.22);}
+.srow.done .slabel{text-decoration:line-through;color:var(--ink-soft);}
+.srow input[type="checkbox"]{appearance:none;-webkit-appearance:none;width:18px;height:18px;
+  border:2px solid var(--line);border-radius:4px;cursor:pointer;flex:0 0 auto;position:relative;
+  transition:all .15s;}
+.srow input[type="checkbox"]:checked{background:var(--paddy);border-color:var(--paddy);}
+.srow input[type="checkbox"]:checked::after{content:"✓";position:absolute;color:#fff;
+  font-size:.72rem;line-height:1;top:1px;left:2px;}
+.slabel{flex:1;font-size:.87rem;}
+.slabel .is-long{color:var(--terra);font-weight:700;font-size:.72rem;margin-left:5px;}
+.splanned{font-family:"Bricolage Grotesque";font-weight:600;font-size:.8rem;color:var(--ink-soft);white-space:nowrap;}
+.sactual-wrap{display:flex;align-items:center;gap:3px;}
+.sactual{width:52px;font-family:"Bricolage Grotesque";font-size:.82rem;font-weight:600;
+  border:1px solid var(--line);border-radius:4px;padding:3px 5px;background:var(--paper);
+  text-align:right;color:var(--paddy-deep);}
+.sactual:focus{outline:none;border-color:var(--paddy);}
+.sunit{font-size:.76rem;color:var(--ink-soft);}
+
+/* NOTES */
+.plan-note{font-size:.82rem;color:var(--ink-soft);margin-top:10px;padding-top:9px;border-top:1px dashed var(--line);}
+.journal-input{width:100%;border:1px solid var(--line);border-radius:6px;background:rgba(255,255,255,.4);
+  padding:7px 10px;font-family:"Noto Sans TC";font-size:.84rem;color:var(--ink);
+  resize:vertical;min-height:44px;max-height:100px;margin-top:7px;}
+.journal-input:focus{outline:none;border-color:var(--paddy);background:rgba(255,255,255,.7);}
+.journal-input::placeholder{color:#aaa;}
+
+/* EXPORT */
+.export-btn{font-family:"Bricolage Grotesque";font-weight:700;font-size:.8rem;
+  border:1.5px solid var(--ink);border-radius:30px;padding:6px 16px;background:var(--paper);
+  cursor:pointer;transition:all .15s;}
+.export-btn:hover{background:var(--ink);color:var(--paper);}
+.reset-btn{font-family:"Bricolage Grotesque";font-weight:700;font-size:.8rem;
+  border:1.5px solid var(--terra);border-radius:30px;padding:6px 16px;background:transparent;
+  color:var(--terra);cursor:pointer;transition:all .15s;}
+.reset-btn:hover{background:var(--terra);color:#fff;}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
+
+footer{margin-top:60px;border-top:1.5px solid var(--line);padding-top:18px;
+  font-size:.78rem;color:var(--ink-soft);text-align:center;line-height:1.8;}
+
+@media(max-width:520px){
+  .wlayout{grid-template-columns:56px 1fr;}
+  .wn-num{font-size:1.3rem;}
+  .stats-grid{grid-template-columns:1fr 1fr;}
+  .srow{flex-wrap:wrap;}
+}
+</style>
+</head>
+<body>
+
+<div class="sbar" id="sbar">
+  <div class="sbar-title">田中馬訓練追蹤</div>
+  <div class="sbar-prog-wrap"><div class="sbar-prog-fill" id="sbProgFill" style="width:0%"></div></div>
+  <div class="sbar-text" id="sbProgText">0 / 22 週完成</div>
+  <div class="sbar-cd" id="sbCd">— 天後鳴槍</div>
+</div>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="kicker">2026 台灣米倉 · 全程馬拉松 42.195K</div>
+    <h1>田中馬<span class="sub">22 週訓練追蹤 · 紀錄每一步，笑著進終點</span></h1>
+    <div class="btn-row">
+      <button class="export-btn" onclick="exportCSV()">匯出 CSV</button>
+      <button class="reset-btn" onclick="resetAll()">清除所有紀錄</button>
+    </div>
+  </header>
+
+  <div class="stats-grid" id="statsGrid"></div>
+
+  <section>
+    <div class="eyebrow">照表操課</div>
+    <h2>22 週訓練進度</h2>
+    <div id="weeksContainer"></div>
+  </section>
+
+  <footer>
+    田中馬 · 全馬 22 週訓練追蹤｜目標：順利完賽、笑著進終點<br>
+    里程為建議目標值，請依身體狀況彈性調整；有持續疼痛請就醫，別硬撐。
+  </footer>
+</div>
+
+<script>
+const RACE = new Date(2026,10,8);
+const TODAY = new Date(); TODAY.setHours(0,0,0,0);
+
+const PHASES = [
+  {id:'A',label:'重新開機',weeks:'W1–W3',period:'6月'},
+  {id:'B',label:'打底期',weeks:'W4–W7',period:'7月'},
+  {id:'C',label:'進階耐力',weeks:'W8–W11',period:'8月'},
+  {id:'D',label:'馬拉松專項',weeks:'W12–W15',period:'9月'},
+  {id:'E',label:'巔峰期',weeks:'W16–W19',period:'9月底–10月中'},
+  {id:'F',label:'減量備賽',weeks:'W20–W22',period:'10月底–11/8'},
+];
+
+const WEEKS = [
+  {num:1,phase:'A',type:'normal',start:'2026-06-08',end:'2026-06-14',weeklyKm:12,
+   sessions:[{l:'輕鬆跑',k:3},{l:'輕鬆跑',k:4},{l:'長跑',k:5,long:true}],
+   note:'全程能聊天的配速，覺得喘就走一走。重點是讓身體想起怎麼跑。'},
+  {num:2,phase:'A',type:'normal',start:'2026-06-15',end:'2026-06-21',weeklyKm:16,
+   sessions:[{l:'輕鬆跑',k:4},{l:'輕鬆跑',k:5},{l:'長跑',k:7,long:true}],
+   note:'找回跑感。留意有沒有不正常的痠痛（尤其膝、阿基里斯腱）。'},
+  {num:3,phase:'A',type:'normal',start:'2026-06-22',end:'2026-06-28',weeklyKm:20,
+   sessions:[{l:'輕鬆跑',k:5},{l:'輕鬆跑',k:6},{l:'長跑',k:9,long:true}],
+   note:'把「一週三跑」變成固定習慣，這是接下來一切的地基。'},
+  {num:4,phase:'B',type:'normal',start:'2026-06-29',end:'2026-07-05',weeklyKm:24,
+   sessions:[{l:'輕鬆跑',k:5},{l:'輕鬆跑',k:6},{l:'輕鬆跑',k:5},{l:'長跑',k:11,long:true}],
+   note:'升到一週四跑，量緩緩往上加。'},
+  {num:5,phase:'B',type:'normal',start:'2026-07-06',end:'2026-07-12',weeklyKm:28,
+   sessions:[{l:'輕鬆跑',k:6},{l:'輕鬆跑',k:7},{l:'輕鬆跑',k:5},{l:'長跑',k:13,long:true}],
+   note:'盛夏來了——長跑挪到清晨或日落後，配速放慢、看心率不看數字。'},
+  {num:6,phase:'B',type:'normal',start:'2026-07-13',end:'2026-07-19',weeklyKm:32,
+   sessions:[{l:'輕鬆跑',k:6},{l:'輕鬆跑',k:8},{l:'輕鬆跑',k:6},{l:'長跑',k:16,long:true}],
+   note:'首次破 15K。跑後 30 分鐘內補水＋碳水＋蛋白質。'},
+  {num:7,phase:'B',type:'rec',start:'2026-07-20',end:'2026-07-26',weeklyKm:22,
+   sessions:[{l:'輕鬆跑',k:5},{l:'輕鬆跑',k:6},{l:'輕鬆跑',k:4},{l:'長跑',k:11,long:true}],
+   note:'減量週：身體在這週把前幾週的訓練「吃進去」並修復，別偷加量。'},
+  {num:8,phase:'C',type:'normal',start:'2026-07-27',end:'2026-08-02',weeklyKm:33,
+   sessions:[{l:'輕鬆跑',k:6},{l:'輕鬆跑',k:8},{l:'輕鬆跑',k:6},{l:'長跑',k:16,long:true}],
+   note:'回到節奏，量重新往上。'},
+  {num:9,phase:'C',type:'normal',start:'2026-08-03',end:'2026-08-09',weeklyKm:38,
+   sessions:[{l:'輕鬆跑',k:7},{l:'輕鬆跑',k:9},{l:'輕鬆跑',k:6},{l:'長跑',k:19,long:true}],
+   note:'長跑接近 20K，開始練習途中補給（能量膠／電解質），讓腸胃習慣。'},
+  {num:10,phase:'C',type:'normal',start:'2026-08-10',end:'2026-08-16',weeklyKm:42,
+   sessions:[{l:'輕鬆跑',k:8},{l:'輕鬆跑',k:9},{l:'輕鬆跑',k:7},{l:'長跑',k:21,long:true}],
+   note:'突破 20K！等於半馬距離，是一個大里程碑。'},
+  {num:11,phase:'C',type:'rec',start:'2026-08-17',end:'2026-08-23',weeklyKm:30,
+   sessions:[{l:'輕鬆跑',k:6},{l:'輕鬆跑',k:7},{l:'輕鬆跑',k:5},{l:'長跑',k:15,long:true}],
+   note:'減量週。身體正在消化前幾週的訓練，別偷加量。'},
+  {num:12,phase:'D',type:'normal',start:'2026-08-24',end:'2026-08-30',weeklyKm:44,
+   sessions:[{l:'輕鬆跑',k:8},{l:'輕鬆跑',k:10},{l:'輕鬆跑',k:6},{l:'長跑',k:23,long:true}],
+   note:'進入專項期，長跑的後段試著維持穩定節奏。'},
+  {num:13,phase:'D',type:'normal',start:'2026-08-31',end:'2026-09-06',weeklyKm:48,
+   sessions:[{l:'輕鬆跑',k:9},{l:'輕鬆跑',k:10},{l:'輕鬆跑',k:7},{l:'長跑',k:25,long:true}],
+   note:'長跑可在中後段插入幾段「目標完賽配速」，感受比賽節奏。'},
+  {num:14,phase:'D',type:'normal',start:'2026-09-07',end:'2026-09-13',weeklyKm:50,
+   sessions:[{l:'輕鬆跑',k:9},{l:'輕鬆跑',k:11},{l:'輕鬆跑',k:7},{l:'長跑',k:27,long:true}],
+   note:'週量與長跑同步推到高檔，這幾週最辛苦也最關鍵。'},
+  {num:15,phase:'D',type:'rec',start:'2026-09-14',end:'2026-09-20',weeklyKm:36,
+   sessions:[{l:'輕鬆跑',k:7},{l:'輕鬆跑',k:8},{l:'輕鬆跑',k:6},{l:'長跑',k:19,long:true}],
+   note:'減量週，為最後的巔峰期蓄力。'},
+  {num:16,phase:'E',type:'normal',start:'2026-09-21',end:'2026-09-27',weeklyKm:50,
+   sessions:[{l:'輕鬆跑',k:9},{l:'輕鬆跑',k:11},{l:'輕鬆跑',k:7},{l:'長跑',k:28,long:true}],
+   note:'從這週起，長跑全套演練比賽裝備與補給（鞋、襪、衣、能量膠、防磨）。'},
+  {num:17,phase:'E',type:'normal',start:'2026-09-28',end:'2026-10-04',weeklyKm:54,
+   sessions:[{l:'輕鬆跑',k:10},{l:'輕鬆跑',k:12},{l:'輕鬆跑',k:8},{l:'長跑',k:30,long:true}],
+   note:'首次 30K！完全模擬比賽日：同樣時間起跑、同樣早餐、同樣補給節奏。'},
+  {num:18,phase:'E',type:'normal',start:'2026-10-05',end:'2026-10-11',weeklyKm:46,
+   sessions:[{l:'輕鬆跑',k:9},{l:'輕鬆跑',k:10},{l:'輕鬆跑',k:7},{l:'長跑',k:24,long:true}],
+   note:'小幅減量，讓腿有電，迎接下週最後一次超長跑。'},
+  {num:19,phase:'E',type:'peak',start:'2026-10-12',end:'2026-10-18',weeklyKm:55,
+   sessions:[{l:'輕鬆跑',k:10},{l:'輕鬆跑',k:12},{l:'輕鬆跑',k:8},{l:'長跑',k:32,long:true}],
+   note:'全程最長的一次！跑完這趟，你的身心都會知道「我做得到」。之後只減不加。'},
+  {num:20,phase:'F',type:'taper',start:'2026-10-19',end:'2026-10-25',weeklyKm:42,
+   sessions:[{l:'輕鬆跑',k:8},{l:'輕鬆跑',k:10},{l:'輕鬆跑',k:6},{l:'長跑',k:22,long:true}],
+   note:'正式減量：砍里程、保留一點點強度，腿開始「養」起來。'},
+  {num:21,phase:'F',type:'taper',start:'2026-10-26',end:'2026-11-01',weeklyKm:30,
+   sessions:[{l:'輕鬆跑',k:6},{l:'輕鬆跑',k:6},{l:'長跑',k:14,long:true},{l:'輕鬆跑（選）',k:4}],
+   note:'會覺得腿癢想多跑——忍住。這週的休息會在比賽日變成你的腿力。'},
+  {num:22,phase:'F',type:'race',start:'2026-11-02',end:'2026-11-08',weeklyKm:42.195,
+   sessions:[{l:'輕鬆跑',k:4},{l:'輕鬆跑＋快步',k:4},{l:'全馬 42.195K',k:42.195,long:true,race:true}],
+   note:'睡飽、賽前 2–3 天多補碳水、不嘗試任何新食物或新裝備。站上起點線那一刻，訓練已經完成了。'},
+];
+
+// ---- STATE ----
+const STORAGE_KEY = 'tanaka_2026';
+let state = (() => { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e){ return {}; } })();
+
+function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+
+function getWS(n) {
+  if (!state['w'+n]) {
+    state['w'+n] = { sessions: WEEKS[n-1].sessions.map(()=>({done:false,actual:null})), note:'' };
+  }
+  return state['w'+n];
+}
+
+// ---- HELPERS ----
+function pdate(s){ const[y,m,d]=s.split('-').map(Number); const dt=new Date(y,m-1,d); dt.setHours(0,0,0,0); return dt; }
+function isPast(w){ return TODAY > pdate(w.end); }
+function isCurrent(w){ return TODAY >= pdate(w.start) && TODAY <= pdate(w.end); }
+function weekActual(n){
+  const ws=getWS(n); const w=WEEKS[n-1]; let t=0;
+  ws.sessions.forEach((s,i)=>{ if(s.done) t += s.actual!=null ? s.actual : w.sessions[i].k; });
+  return Math.round(t*10)/10;
+}
+function allDone(n){ return getWS(n).sessions.every(s=>s.done); }
+
+function stats(){
+  let km=0, wks=0, maxS=0, sess=0;
+  WEEKS.forEach(w=>{
+    const ws=getWS(w.num); let wkm=0;
+    ws.sessions.forEach((s,i)=>{
+      if(s.done){ const k=s.actual!=null?s.actual:w.sessions[i].k; wkm+=k; sess++; if(k>maxS) maxS=k; }
+    });
+    km+=wkm;
+    if(allDone(w.num)) wks++;
+  });
+  return { km:Math.round(km*10)/10, wks, maxS:Math.round(maxS*10)/10, sess };
+}
+
+const daysLeft = Math.max(0, Math.round((RACE-TODAY)/86400000));
+
+function fmtDate(s, e){
+  const sd=pdate(s), ed=pdate(e);
+  const sm=sd.getMonth()+1, sdd=sd.getDate(), em=ed.getMonth()+1, edd=ed.getDate();
+  return sm===em ? `${sm}/${sdd}–${edd}` : `${sm}/${sdd}–${em}/${edd}`;
+}
+
+// ---- RENDER ----
+function renderWeek(w){
+  const ws = getWS(w.num);
+  const actual = weekActual(w.num);
+  const target = w.weeklyKm;
+  const pct = Math.min(130, Math.round(actual/target*100));
+  const pfill = pct>=100?'over':(isPast(w)&&pct<50?'low':'');
+  const isCurr = isCurrent(w);
+  const isDone = allDone(w.num);
+  const typeLabels = {rec:'減量週',peak:'巔峰',taper:'減量備賽',race:'比賽週'};
+
+  const sessHTML = ws.sessions.map((s,i)=>{
+    const p=w.sessions[i];
+    return `<div class="srow${s.done?' done':''}" id="sr-${w.num}-${i}">
+      <input type="checkbox"${s.done?' checked':''} onchange="toggleSess(${w.num},${i},this.checked)">
+      <span class="slabel">${p.l}${p.long?'<span class="is-long">長跑</span>':''}${p.race?' 🏁':''}</span>
+      <span class="splanned">預 ${p.k}K</span>
+      <div class="sactual-wrap">
+        <input type="number" class="sactual" placeholder="${p.k}" value="${s.actual!=null?s.actual:''}"
+          min="0" max="99" step="0.1" title="實際跑了幾K"
+          onchange="setActual(${w.num},${i},this.value)" onclick="this.select()">
+        <span class="sunit">K</span>
+      </div>
+    </div>`;
+  }).join('');
+
+  const typeTag = typeLabels[w.type];
+  const noteSafe = (ws.note||'').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+  return `<div class="wcard${isCurr?' current':''}${isDone?' done-all':''} ${w.type}" id="wcard-${w.num}">
+    <div class="wlayout">
+      <div class="wnb">
+        <div class="wn-num">${w.num}</div>
+        <div class="wn-lbl">${w.type==='race'?'RACE':'WEEK'}</div>
+        <div class="wn-chk">✓</div>
+      </div>
+      <div class="wbody">
+        ${isCurr?'<div class="curr-tag">▶ 本週訓練</div>':''}
+        <div class="wtop">
+          <span class="wdate">${fmtDate(w.start,w.end)}</span>
+          <div class="wbadges">
+            ${typeTag?`<span class="badge typ ${w.type}">${typeTag}</span>`:''}
+            <span class="badge">週量 ~${w.weeklyKm}K</span>
+            <span class="badge long">長跑 ${w.sessions.find(s=>s.long)?.k??'?'}K</span>
+          </div>
+        </div>
+        <div class="wprog">
+          <div class="wprog-labels">
+            <span>本週進度</span>
+            <span class="wprog-actual">${actual}K <span style="color:var(--ink-soft);font-weight:400">/ ${target}K</span>
+              ${pct>=100?'<span style="color:var(--gold);font-size:.75rem;margin-left:3px">✓ 達標</span>':''}</span>
+          </div>
+          <div class="wprog-track"><div class="wprog-fill ${pfill}" style="width:${Math.min(pct,100)}%"></div></div>
+        </div>
+        <div class="sess-list">${sessHTML}</div>
+        <div class="plan-note">${w.note}</div>
+        <textarea class="journal-input" placeholder="訓練日誌、感受、備注…"
+          oninput="setNote(${w.num},this.value)">${noteSafe}</textarea>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderStats(){
+  const s = stats();
+  const pct = Math.round(s.wks/22*100);
+  document.getElementById('sbProgFill').style.width = pct+'%';
+  document.getElementById('sbProgText').textContent = s.wks+' / 22 週完成';
+  document.getElementById('sbCd').textContent = daysLeft+' 天後鳴槍';
+  document.getElementById('statsGrid').innerHTML = `
+    <div class="sc"><div class="val">${s.km}</div><div class="lab">累計訓練里程 (K)</div></div>
+    <div class="sc"><div class="val">${s.wks}</div><div class="lab">完整完成的週數</div></div>
+    <div class="sc hi"><div class="val">${s.maxS}</div><div class="lab">最長單次跑步 (K)</div></div>
+    <div class="sc accent"><div class="val">${daysLeft}</div><div class="lab">距離比賽日 (天)</div></div>`;
+}
+
+function renderAll(){
+  renderStats();
+  let html = '';
+  let lastPhase = null;
+  WEEKS.forEach(w=>{
+    if(w.phase !== lastPhase){
+      const ph = PHASES.find(p=>p.id===w.phase);
+      html += `<div class="phase-head"><span class="pn">階段${ph.id} · ${ph.label}</span>
+        <span class="pr">${ph.weeks}｜${ph.period}</span><span class="phase-bar"></span></div>`;
+      lastPhase = w.phase;
+    }
+    html += renderWeek(w);
+  });
+  document.getElementById('weeksContainer').innerHTML = html;
+  // Scroll to current
+  const curW = WEEKS.find(w=>isCurrent(w));
+  if(curW){ setTimeout(()=>{ const el=document.getElementById('wcard-'+curW.num); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); },400); }
+}
+
+// ---- INTERACTIONS ----
+function rerenderWeek(n){
+  const el = document.getElementById('wcard-'+n);
+  if(!el) return;
+  // preserve textarea before re-render
+  const ta = el.querySelector('.journal-input');
+  if(ta){ state['w'+n] = state['w'+n]||{}; state['w'+n].note = ta.value; }
+  const tmp = document.createElement('div');
+  tmp.innerHTML = renderWeek(WEEKS[n-1]).trim();
+  el.replaceWith(tmp.firstElementChild);
+  renderStats();
+}
+
+function toggleSess(n, i, done){
+  const ws = getWS(n);
+  ws.sessions[i].done = done;
+  save();
+  rerenderWeek(n);
+}
+
+function setActual(n, i, val){
+  const ws = getWS(n);
+  const num = parseFloat(val);
+  ws.sessions[i].actual = isNaN(num)||val==='' ? null : num;
+  // auto-check if distance entered
+  if(!isNaN(num) && num > 0) ws.sessions[i].done = true;
+  save();
+  rerenderWeek(n);
+}
+
+function setNote(n, val){
+  const ws = getWS(n);
+  ws.note = val;
+  save();
+}
+
+function exportCSV(){
+  let csv = 'Week,Start,End,Type,Target_KM,Actual_KM,Completed,Sessions_Done,Note\n';
+  WEEKS.forEach(w=>{
+    const ws = getWS(w.num);
+    const actual = weekActual(w.num);
+    const done = ws.sessions.filter(s=>s.done).length;
+    const total = w.sessions.length;
+    const note = (ws.note||'').replace(/"/g,'""');
+    csv += `${w.num},${w.start},${w.end},${w.type},${w.weeklyKm},${actual},${done===total?'YES':done+'/'+total},"${note}"\n`;
+  });
+  const blob = new Blob(['﻿'+csv], {type:'text/csv;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download='田中馬訓練紀錄.csv'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function resetAll(){
+  if(!confirm('確定要清除所有訓練紀錄嗎？此操作無法復原。')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  state = {};
+  renderAll();
+}
+
+renderAll();
+</script>
+</body>
+</html>
